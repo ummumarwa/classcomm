@@ -1,0 +1,1 @@
+Activate your Classcomm Account within {{ expiration_days }} Days!

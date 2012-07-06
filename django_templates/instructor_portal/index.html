@@ -1,0 +1,89 @@
+{% extends "instructor_portal/loggedin_base.html" %}
+
+{% block extrahead %}
+<script type="text/javascript" src="{{ STATIC_URL }}sorttable.js"></script>
+{% endblock %}
+
+{% load instructor_portal_extras %}
+
+{% block content %}
+<h2>Welcome Classcomm Staff!</h2>
+
+{# Print Messages Stack #}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+{# List the courses user has roles in #}
+<h3>Your Course Instructor Involvement</h3>
+{% if course_data %}
+<table cellspacing='0' class="CourseList sortable">
+<thead>
+<tr>
+    <th>Course</th>
+    <th>Department</th>
+    <th>Your Roles</th>
+    <th>Student Assigns</th>
+</tr>
+</thead>
+{#  Tuples (Course, Department, Roles, Mentor Assigns) by key: course_id #}
+{% for key,course_tuple in course_data.items %}
+<tr>
+    <td><b><a href="/instructor/courseindex/{{ key }}/">{{ course_tuple.0.name }}</a></b></td>
+    <td>{{ course_tuple.1 }}</td>
+    <td>
+    {% for role in course_tuple.2 %}
+        {{ role }}
+        {% if not forloop.last %}
+            ,
+        {% endif %}
+    {% endfor %}        
+    </td>
+    <td>
+    {% for student in course_tuple.3 %}
+        {{ student|printUsername|safe }}
+        {% if not forloop.last %}
+            , 
+        {% endif %}
+    {% endfor %}
+    </td>
+</tr>
+{% endfor %}
+</table>
+{% else %}
+<i><h4>You do not have managerial privileges for any Courses.</h4></i>
+{% endif %}
+
+    
+<h3>Global Announcements</h3>
+
+{% if user.is_superuser %} {# Print Link to Add Global Announcement #}
+<div id="announcement_add">
+    <b><img class="icon" src="{{ STATIC_URL }}icon_add_smallest.png" alt="Add Announcement" />
+    <a href="/admin/student_portal/announcement/add/?make_global=True">Add new Global Announcement using admin?</a></b>
+</div>
+{% endif %}
+
+{% if announcements %} {# List the global announcements #}
+{% for announcement in announcements %}
+<div class="announcement">
+<h3>{{ announcement.headline }}</h3>
+{% if user.is_superuser %} {# Add possibly for Editing this Global Announcement in Admin #}
+    <div> <img src="{{ STATIC_URL }}icon_info_smallest.png" alt="Edit Announcement" />
+    <b> <a href="/admin/student_portal/announcement/ {{ announcement.id }} /">
+        Edit this Announcement in Admin.</a></b><br /> </div>
+{% endif %}
+<h4>Posted by: <a href="mailto:{{announcement.author.email}}">{{ announcement.author }}</a> 
+ - {{ announcement.pub_date|date:"M jS Y" }}</h4>
+<p>{{ announcement.content }}</p>
+</div>
+{% endfor %}
+{% else %}
+<i><h4>Presently No Announcements</h4></i>
+{% endif %}
+
+{% endblock %}

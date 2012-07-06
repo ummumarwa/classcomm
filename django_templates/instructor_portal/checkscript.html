@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+{% load instructor_portal_extras %}
+
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="description" content="_classcomm homework checkscript_" />
+<meta name="keywords" content="_classcomm,checkscript_" />
+<meta name="author" content="Matteius" />
+
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}checkscript.css" />
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}dashboard.css" />
+<script type="text/javascript" src="{{ STATIC_URL }}sorttable.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}jquery.js"></script>
+<script type="text/javascript" >
+$(document).ready(function(){
+   $('#id_course').change(function(){
+       if ($(this).val()) {
+           window.location = "/instructor/checkscript/course/" + ($(this).val()) + "/";
+       }
+   });
+});
+</script>
+
+<title>Classcomm Homework CheckScript</title>
+</head>
+<body>
+
+<h1>Classcomm Homework CheckScript</h1>
+
+{# Detail Information #}
+<div>
+    <a href="/instructor/">Return to Instructor Portal</a> <br /><br />
+    View Assignment Submissions that are flagged (with add_checkscript) for not yet having been assigned a Grade.<br /><br />
+    <b>Everybody:</b> <a href="/instructor/checkscript/">View Classcomm Ungraded List for Your Roles</a>.<br /><br />
+    <b>Super Users:</b> <a href="/instructor/checkscript/all/">View Classcomm Complete Ungraded List</a>.<br /><br />
+    <b>CheckScript by Course:</b>
+    <select name="checkscript_by_course" id="id_course">
+        <option value="" selected="selected" >---------</option>
+    {% for course in courses %}
+        <option value="{{ course.pk }}">{{ course }}</option>
+    {% endfor %}
+    </select><br /><br />
+    <b>Please Note:</b>
+    Download links are time sensitive for security, so you may need to reload the page for a fresh link.<br /><br />
+    <b>Sortable Tables:</b>
+    You can sort this Ungraded Submission table by any of the headings simply by clicking on them.<br /><br />
+</div>
+
+{# Print Messages Stack #}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+{# Print Checkscript Data Table #}
+<table class="sortable">
+<tr>
+    <th>Submitted</th>
+    <th class="sorttable_numeric">Days Old</th>
+    <th>Student</th>
+    <th class="sorttable_nosort">Submission</th>
+    <th>Department</th>
+    <th>Class</th>
+    <th>Assignment</th>
+    <th>Mentor Assign</th>
+    <th class="sorttable_nosort">Return Grade</th>
+</tr>
+{% for submission in submissions %}
+<tr {{ submission.date|daysPassed|checkscriptTrClass|safe }} >
+    <td>{{ submission.date|date:"M jS Y" }}</td>
+    <td><b>[{{ submission.date|daysPassed }} days old]</b></td>
+    <td>{{ submission.enrollment.student }}</td>
+    <td><img class="icon" src="{{ STATIC_URL }}icon_download_small.png" alt="Download" />
+        <b><a href="{{ submission.file.url|safe }}">Download</a></b></td>
+    <td>{{ submission.assignment.course.department.name }}</td>
+    <td><a href="/instructor/courseindex/{{ submission.assignment.course.id }}/">
+        {{ submission.assignment.course.name }}</a></td>
+    <td>{{ submission.assignment.name }}</td>
+    <td>{{ submission.enrollment.mentor }}</td>
+    <td><img class="icon" src="{{ STATIC_URL }}icon_return_small.png" alt="ReturnGrade" />
+    <a href="/instructor/roster_tools/{{ submission.enrollment.id }}/return/grade/{{ submission.assignment.id }}/">
+        Return Grade</a></td>
+</tr>
+{% endfor %}
+</table>
+
+</body>
+</html>

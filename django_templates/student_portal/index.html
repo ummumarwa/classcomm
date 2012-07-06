@@ -1,0 +1,61 @@
+{% extends "student_portal/loggedin_base.html" %}
+
+{% load student_portal_extras %}
+
+{% block extrahead %}
+<script type="text/javascript" src="{{ STATIC_URL }}sorttable.js"></script>
+{% endblock %}
+
+{% block content %}
+<h2>Welcome Classcomm Students!</h2>
+
+{# Course Enrollments #}
+<h3>Your Courses</h3>
+{% if enrollments %}
+
+{# Configure Table and print Header #}
+<table cellspacing='0' class="CourseList sortable">
+<thead><tr>
+   <th>Course</th>
+   <th>Department</th>
+   <th>End Date</th>   
+</tr></thead>
+
+{# List the user's course details #}
+{% for enrollment in enrollments %}
+<tr>
+   <td><b><a href="/student/courseindex/{{ enrollment.id }}/">{{ enrollment.course.name }}</a></b></td>
+   <td>{{ enrollment.course.department }}</td>
+   {% if enrollment.enrollment_length %}
+      <td>{{ enrollment.start_date|adjustDateWeeks:enrollment.enrollment_length|date:"M jS Y" }}</td>
+   {% else %}
+      <td>{{ enrollment.start_date|adjustDateWeeks:enrollment.course.enrollment_length|date:"M jS Y" }}</td>
+   {% endif %}
+</tr>
+{% endfor %}
+
+</table>
+{% else %}
+<i><h4>You are not enrolled in any courses</h4></i>
+{% endif %}
+
+{# Global Announcements #}
+<h3>Global Announcements</h3>
+{% if announcements %}
+
+{# List the global announcements #}
+{% for announcement in announcements %}
+<div class="announcement">
+<h3>{{ announcement.headline }}</h3>
+<h4>Posted by: <a href="mailto:{{announcement.author.email}}">{{ announcement.author }}</a> 
+ - {{ announcement.pub_date|date:"M jS Y" }}</h4>
+<p>{{ announcement.content }}</p>
+</div>
+{% endfor %}
+
+{% else %}
+<i><h4>Presently No Announcements</h4></i>
+{% endif %}
+
+{% endblock %}
+

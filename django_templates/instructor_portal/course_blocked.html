@@ -1,0 +1,51 @@
+{% extends "instructor_portal/loggedin_base.html" %}
+
+{# This template is for blocking access to Courses and Course/Enrollment Actions #}
+{% block content %}
+
+{# Print Messages Stack #}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+{# Case: Bad User - Has 0 privileges with this Course. #}
+{% ifequal access_flag -1 %}
+<h3>Logged-in User Has no managerial roles with this Course!</h3>
+{% endifequal %}
+
+{# Case: Unused access_flag value. #}
+{% ifequal access_flag 0 %}
+<h3>No instructor privileges for this Course!</h3>
+{% endifequal %}
+
+{# Case: Course Director sent to the course_blocked page. #}
+{% ifequal access_flag 2 %}
+<h3>You are Course Director, and this yet this action redirected you to a blocked page!</h3>
+<h2>Consider filing a bug report with the developers.</h2>
+{% endifequal %}
+
+{# Case: Course Instructor sent to the course_blocked page. #}
+{% ifequal access_flag 3 %}
+<h3>User is a Mentor, and this action is blocked for mentors!</h3>
+{% endifequal %}
+
+{# Case: Course Mentor sent to the course_blocked page. #}
+{% ifequal access_flag 4 %}
+<h3>User is a Limited Mentor, and this user lacks permission!</h3>
+{% endifequal %}
+
+{# Case: Limited User Mentor sent to the course_blocked page. #}
+{% ifequal access_flag 5 %}
+<h3>User is a Limited Mentor, and this user lacks permission!</h3>
+{% endifequal %}
+
+{# Case: Department Director sent to the course_blocked page. #}
+{% ifequal access_flag 6 %}
+<h3>User is a Limited Mentor, and this user lacks permission!</h3>
+{% endifequal %}
+
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends "student_portal/course_base.html" %}
+{% load student_portal_extras %}
+
+{% block content %}
+
+<h2>{{ course.name }} - Home</h2>
+
+<h3>Course Overview</h3>
+<table cellspacing='0' class="CourseList">
+<tr>
+    <td><b>Department:</b></td>
+    <td>
+        {% if course.department %}
+            {{ course.department.name|safe }}
+        {% else %}
+            None Listed
+        {% endif %}
+    </td>
+</tr>
+<tr>
+    <td><b>Course Director:</b></td>
+    <td>
+        {% if course.director %}
+            {{ course.director|printUser|safe }}
+        {% else %}
+            None Listed
+        {% endif %}
+    </td>
+</tr>
+<tr>
+    <td><b>Instructors:</b></td>
+    <td>
+        {% if instructors %}
+            {% for instructor in instructors %}
+                {{ instructor.instructor|printUser|safe }}<br />
+            {% endfor %}
+        {% else %}
+            None Listed
+        {% endif %}
+    </td>
+</tr>
+<tr>
+    <td><b>Mentors:</b></td>
+    <td>
+    {% if mentors %}
+        {% for mentor in mentors %}
+            {{ mentor.mentor|printUser|safe }}
+            <br />
+        {% endfor %}
+    {% else %}
+        None Listed
+    {% endif %}
+    </td>
+</tr>
+<tr>
+    <td><b>Personal Mentor:</b></td>
+    <td>
+        {% if enrollment.mentor %}
+            {{ enrollment.mentor|printUser|safe }}
+        {% else %}
+            None Listed
+        {% endif %}
+    </td>
+</tr>
+</table>
+
+{# Course Announcements #}
+<h3>Course Announcements</h3>
+{% if announcements %}
+
+    {# List the course announcements #}
+    {% for announcement in announcements %}
+        <div class="announcement">
+            <h3>{{ announcement.headline }}</h3>
+            <h4>Posted by: <a href="mailto:{{announcement.author.email}}">{{ announcement.author }}</a>
+                - {{ announcement.pub_date|date:"M jS Y" }}</h4>
+            <b>Tags: </b> {# Add Announcement Tag(s) #}
+            {% if announcement.department %}
+                <img src="{{ STATIC_URL }}tag_department.png" alt="Department Announcement" />
+            {%  endif %} {% if announcement.course %}
+                <img src="{{ STATIC_URL }}tag_course.png" alt="Course Announcement" />
+            {% endif %}
+            <p>{{ announcement.content }}</p>
+        </div>
+    {% endfor %}
+{% else %}
+    <h4><i>Presently No Announcements</i></h4>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,26 @@
+
+
+Original Page OSS Layout CSS
+    Dist-Name: andreas01
+    Version: 1.0
+    Date: (July 25, 2005)
+    Author:Andreas Viklund 
+    Author Website: http://andreasviklund.com
+    Purpose: Free to use as-is for any purpose, so long as the proper credits are given for the original design work.
+    For design assistance and support, contact Andreas through his website or through http://oswd.org/email.phtml?user=Andreas
+
+
+Icons (Add, Delete, Return, Info)
+    Author:	Deleket (Jojo Mendoza)
+    Date:	September 23rd, 2008 (iconarchive.com)
+    Author Website: http://www.deleket.com/
+    Service:	Design service for custom icons.  Please contact author to request a quote.
+    License:	CC Attribution-Noncommercial-No Derivate 3.0
+    Commercial Usage: Allowed (Author Approval required)
+
+    
+Sortable Tables by sorttable
+    Author: Stuart Langridge
+    Release Date: 7th April 2007
+    Website: http://www.kryogenix.org/code/browser/sorttable/
+

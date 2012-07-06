@@ -1,0 +1,126 @@
+{% extends "instructor_portal/course_base.html" %}
+{% load instructor_portal_extras %}
+
+{% block content %}
+
+{# Page Heading #}
+<h2>{{ course.name }} - Assignments</h2>
+
+{# Detail Information #}
+<div>
+    <b>Please Note:</b> Download links are time sensitive for security--
+    you may need to reload this page for fresh Download link locations!
+</div>
+
+{# Print Link to Add Assignment #}
+{% if access_type|editAssignment %}
+<br /><div id="assignment_add">
+<b><img class="icon" src="{{ STATIC_URL }}icon_add_smallest.png" alt="Add Assignment" />
+<a href="add">Add new Assignment to this Course?</a></b>
+</div>
+{% endif %}
+
+{# List Assignments #}
+<h3>Course Assignments</h3>
+{% if assignments.object_list %}
+
+{# Configure Table #}
+<table summary="Current Assignments" class="assignments" cellspacing="0">
+<thead>
+    <tr>
+        <th>Name</th>
+        <th>Due Date</th>
+        <th>Grading</th>
+    </tr>
+</thead>
+
+{# Cycle through the course assignments #}
+{% for assignment in assignments.object_list %}
+
+{# First Row Assignment Header #}
+<tr class="assignmentNormal">
+    {# Assignment Name #}
+    <td><b>{{ assignment.name }}</b></td>
+
+    {# Assignment Due Date #}
+    <td><b>
+    {% if assignment.apply_due_date %}
+        {{ assignment.weeks_after }} weeks after and {{ assignment.days_after }} days after
+    {% else %}
+        None Listed
+    {% endif %}
+   </b></td>
+
+   {# Assignment Grading #}
+   <td><b>
+        {# Display points #}
+            -- /
+        {% if assignment.display_points_possible %}
+            {{ assignment.points_possible }}
+        {% else %}
+            --
+        {% endif %}
+    </b></td>
+</tr>
+
+{# Assignment Details #}
+<tr class="assignmentNormal">
+    <td><em><b>Details:</b></em></td>
+    <td class="assignmentDesc" colspan="2"> {{ assignment.details }} </td>
+</tr>
+
+{# Add a row for any provided files #}
+{% if assignment.provided_files %}
+<tr class="assignmentNormal">
+    <td> <em><b>Provided Files:</b></em> </td>
+    <td>
+        <img class="icon" src="{{ STATIC_URL }}icon_download_smallest.png" alt="Download" />
+        {% if assignment.provided_files %}
+            <b><a href="{{ assignment.provided_files.url|safe }}">Download</a></b>
+        {% endif %}
+    </td>
+    <td></td>
+</tr>
+{% endif %}
+
+{# Add a row for editing this Assignment in Admin #}
+{% if access_type|editAssignment %}
+<tr class="assignmentNormal">
+    <td colspan="3">
+    <img src="{{ STATIC_URL }}icon_info_smallest.png" alt="Edit Assignment" />
+    <b><a href="/admin/student_portal/assignment/{{ assignment.id }}/">
+        Edit or Delete this Assignment in Admin.</a></b><br />
+    </td>
+</tr>
+{% endif %}
+
+{# Row Separator #}
+{% if not forloop.last %}
+   <tr class="assignmentBlank"><td colspan="3"></td></tr>
+{% endif %}
+
+{% endfor %}
+</table>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if assignments.has_previous %}
+            <a href="?page={{ assignments.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ assignments.number }} of {{ assignments.paginator.num_pages }}.
+        </span>
+
+        {% if assignments.has_next %}
+            <a href="?page={{ assignments.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+
+{% else %}
+<i><h4>No Assignments Listed</h4></i>
+{% endif %}
+
+{% endblock %}
+

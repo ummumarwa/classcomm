@@ -1,0 +1,50 @@
+{% extends "instructor_portal/course_base.html" %}
+{% load instructor_portal_extras %}
+
+{% block content %}
+
+{# Page Heading #}
+<h2><img class="icon" src="{{ STATIC_URL }}icon_add_med.png" alt="Add Announcement" />
+Announcement Add</h2>
+
+{# Detail Information #}
+<div>
+    View for adding an Announcement to a specified Course.<br /><br />
+    {# Print Add Announcement in Admin link #}
+    <img class="icon" src="{{ STATIC_URL }}icon_add_smallest.png" alt="Add Announcement in Admin" />
+    <b><a href="/admin/student_portal/announcement/add/?course={{ course.id }}">
+        Add Announcement using Classcomm Admin instead?</a></b><br /><br />
+    <b>Please Note:</b> Announcements are ordered by pub_date which is typically the date they were first created.<br />
+</div>
+
+{# Print New Announcement Form #}
+<form id="add_Announcement" method="post" action=".">
+<div class="error"> {# Print any form non-field error information #}
+    <h3>{{ form.non_field_errors }}</h3>
+</div>
+<table>
+    <tr>
+        <th>Course</th>
+        <td>{{ course }}</td>
+    </tr>
+    <tr><td colspan="2"><input name="author" type="hidden" value="{{user.id}}" /></td></tr>
+    <tr><td colspan="2">{{ form.headline.errors }}</td></tr>
+    <tr>
+        <th>{{ form.headline.label }}<span class="required">*</span></th>
+        <td>{{ form.headline }}</td>
+    </tr>
+    <tr><td colspan="2">{{ form.content.errors }}</td></tr>
+    <tr>
+        <th>{{ form.content.label }}<span class="required">*</span></th>
+        <td>{{ form.content }}</td>
+    </tr>
+    <tr><td colspan="2">{% csrf_token %}</td></tr>
+    <tr>
+        <td></td>
+        <td><input type="submit" value="Add Announcement" /></td>
+    </tr>
+</table>
+<div class="required">* Denotes Required Field</div>
+</form>
+
+{% endblock %}

@@ -1,0 +1,48 @@
+
+/* General Page Stylings */
+body {
+   font: 95% Verdana,Tahoma,Arial,sans-serif;
+}
+
+/* Check Script Table Stylings */
+table {
+	border-collapse: collapse;
+	font-size: 0.8em;
+	margin: 0;
+	padding: 0;
+   text-align: center;   
+}
+th, td {
+	border-bottom: 1px solid #666;
+	border-top: 1px solid #666;
+	padding: 0.6em;
+	vertical-align: 4px;
+}
+thead th, tfoot th, tfoot td {
+	background-color: #F1EDC2;
+	font-size: 1.15em;
+}
+th {
+	background-color:#eee;
+}
+tbody tr:hover td, tbody tr:hover th {
+	background-color: #F1EDC2;
+}
+/* Colors--class names used in checkscriptTrClass template tag*/
+.recent {
+	background-color: #EEF3E2;
+}
+.ok {
+	background-color: #FDFCDC;
+}
+.old {
+	background-color: #FEE0C6;
+}
+/* Table Link Properties */
+tbody a {
+	color: #303030;
+}
+tbody a:hover {
+	color: #3030c0;
+}
+

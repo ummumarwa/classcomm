@@ -1,0 +1,71 @@
+{% extends "instructor_portal/course_base.html" %}
+
+{% load instructor_portal_extras %}
+
+{% block content %}
+
+{# Page Heading #}
+<h2><img class="icon" src="{{ STATIC_URL }}icon_add_med.png" alt="Add a Due Date Override" />
+Add Due Date Override</h2>
+
+{# Detail Information #}
+<div>
+    Adding Due Date Override for a specific Enrollment's Assignment.<br /><br />
+    {# Print Add Due Date Override in Admin link #}
+    <img class="icon" src="{{ STATIC_URL }}icon_add_smallest.png" alt="Add DueDateOverride in Admin" />
+    <b><a href="/admin/student_portal/duedateoverride/add/?enrollment={{ enrollment.id }}&amp;assignment={{ assignment.id }}">
+        Add Due Date Override using Classcomm Admin instead?</a></b><br /><br />
+    <b>Note:</b> Creating a DueDateOverride changes the enrollee Assignment Due-Date in Classcomm.
+    <b><a href="/instructor/courseindex/{{ course.id }}/roster_tools/">Course Roster</a> ->
+    <a href="/instructor/courseindex/{{ course.id }}/roster_tools/grade_report/{{ enrollment.id }}/">
+        Student Grade Report</a></b>.
+</div>
+
+{# Print Grade Return Form #}
+<form enctype="multipart/form-data" id="return_Grade" method="post" action=".">
+<div class="error">
+    <h3>{{ form.non_field_errors }}</h3>
+</div>
+<table>
+    <tr>
+        <th>Student</th>
+        <td>{{ enrollment.student }}</td>
+    </tr>
+    <tr>
+        <th>Start Date</th>
+        <td>{{ enrollment.start_date }}</td>
+    </tr>
+    <tr>
+        <th>Course</th>
+        <td>{{ assignment.course }}</td>
+    </tr>
+    <tr>
+        <th>Assignment</th>
+        <td>{{ assignment.name }}</td>
+    </tr>
+    <tr><td colspan="2">{{ form.weeks_after.errors }}</td></tr>
+    <tr>
+        <th>{{ form.weeks_after.label }}<span class="required">*</span></th>
+        <td>{{ form.weeks_after }}</td>
+    </tr>
+    <tr><td colspan="2">{{ form.days_after.errors }}</td></tr>
+    <tr>
+        <th>{{ form.days_after.label }}<span class="required">*</span></th>
+        <td>{{ form.days_after }}</td>
+    </tr>
+    <tr><td colspan="2">{{ form.allow_late.errors }}</td></tr>
+    <tr>
+        <th>{{ form.allow_late.label }}</th>
+        <td>{{ form.allow_late }}</td>
+    </tr>
+    <tr>
+        <td><span class="required">* Denotes Required Field</span></td>
+        <td>{% csrf_token %}</td></tr>
+    <tr>
+        <td></td>
+        <td><input type="submit" value="Add DueDateOverride" /></td>
+    </tr>
+</table>
+</form>
+
+{% endblock %}

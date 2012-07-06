@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{# Include jQuery and JavaScript for dynamic server time. #}
+{% block serverclock %}
+<script type="text/javascript" src="{{ STATIC_URL }}jquery.js"></script>
+<script type="text/javascript">
+function serverTime() {
+    $.ajax( {
+        url : "/server-time/",
+        success : function (data) { $("#timeArea").html(data); }
+    } );
+    setTimeout("serverTime()", 30000);
+}
+</script>
+{% endblock %}
+
+{% block header %}
+{# Login/Logout Data #}
+<p>Logged in as: <strong>{{ user.username }}</strong> - <a href="/registration/logout/">Logout</a>
+<br />
+<span class="serverTime">
+{# Date/Time #}
+<em><b>Server Time:</b><span id="timeArea">{% now "F jS Y @ h:iA" %}</span></em>
+</span>
+</p>
+{% endblock %}
+
+
+{% block body %}
+<body onload="serverTime()">
+{% endblock %}
+
+{% block leftbar %}
+
+<h2 class="hide">Menu:</h2>
+<ul>
+{% block menuitems %}
+<li><a href="/instructor/index.html">Welcome</a></li>
+<li><a href="/instructor/checkscript/">Checkscript</a></li>
+{% endblock %}
+</ul>
+
+<div class="announce">
+{% block  bottomleftbar %}
+<h4>Open Space:</h4>
+This is open space on the website for delivering some sort of user specific content.
+{% endblock %}
+</div>
+
+{% endblock %}

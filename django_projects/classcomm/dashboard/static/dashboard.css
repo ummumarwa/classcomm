@@ -1,0 +1,31 @@
+/* Classcomm Dashboard Style Sheet
+
+This style sheet contains stylings shared across the student_portal and instructor_portal apps.
+
+Classcomm Version: 0.0.1
+(March 1, 2011)
+
+*/
+
+/**** Django Messages Framework Styling ****/
+.messages li.debug {
+    background-color: yellow;
+    color: #9932cc;
+    font-weight: bold; }
+.messages li.info {
+    background-color: #D2B9D3;
+    color: #9acd32;
+    font-weight: bold; }
+.messages li.success {
+    background-color: #f0f8ff;
+    color: #228b22;
+    font-weight: bold; }
+.messages li.warning {
+    background-color: #f0f8ff;
+    color: #ff4500;
+    font-weight: bold; }
+.messages li.error {
+    background-color: #f0f8ff;
+    color: red;
+    font-weight: bold; }
+

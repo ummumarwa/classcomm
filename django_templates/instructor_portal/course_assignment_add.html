@@ -1,0 +1,91 @@
+{% extends "instructor_portal/course_base.html" %}
+{% load instructor_portal_extras %}
+
+{% block content %}
+
+{# Page Heading #}
+<h2><img class="icon" src="{{ STATIC_URL }}icon_add_med.png" alt="Delete Announcement" />
+Assignment Add</h2>
+
+{# Detail Information #}
+<div>
+    <b>Please Note:</b> Assignments are ordered alphabetically by name, so organize them with linear names such as:
+        AS.01, AS.02, AS.03, etc.<br /><br />
+    {# Print Link to Add Assignment #}
+    <img class="icon" src="{{ STATIC_URL }}icon_add_smallest.png" alt="Add Assignment in Admin" />
+    <b><a href="/admin/student_portal/assignment/add/?course={{ course.id }}">Add new Assignment using Admin?</a>
+    [Recommended]</b>
+    <br />
+</div>
+
+{# Print Add Assignment Form #}
+<form enctype="multipart/form-data" id="add_Assignment" method="post" action=".">
+<div class="error">
+    <h3>{{ form.non_field_errors }}</h3>
+</div>
+<table>
+    <tr>
+        <th>Course</th>
+        <td>{{ course }}</td>
+    </tr>
+    <tr><td colspan="2">{{ form.name.errors }}</td></tr>
+    <tr>
+        <th>{{ form.name.label }}<span class="required">*</span></th>
+        <td>{{ form.name }}</td>
+    </tr>
+    <tr><td colspan="2">{{ form.details.errors }}</td></tr>
+    <tr>
+        <th>{{ form.details.label }}<span class="required">*</span></th>
+        <td>{{ form.details }}</td>
+    </tr>
+    <tr><td colspan="2">{{ form.points_possible.errors }}</td></tr>
+    <tr>
+        <th>{{ form.points_possible.label }}<span class="required">*</span></th>
+        <td>{{ form.points_possible }}</td>
+    </tr>
+    <tr><td colspan="2">{{ form.display_points_possible.errors }}</td></tr>
+    <tr>
+        <th>{{ form.display_points_possible.label }}</th>
+        <td>{{ form.display_points_possible }}</td>
+    </tr>
+    <tr><td colspan="2">{{ form.provided_files.errors }}</td></tr>
+    <tr>
+        <th>{{ form.provided_files.label }}</th>
+        <td>{{ form.provided_files }}</td>
+    </tr>
+    <tr><td colspan="2">{{ form.apply_due_date.errors }}</td></tr>
+    <tr>
+        <th>{{ form.apply_due_date.label }}</th>
+        <td>{{ form.apply_due_date }}</td>
+    </tr>
+    <tr><td colspan="2">{{ form.weeks_after.errors }}</td></tr>
+    <tr>
+        <th>{{ form.weeks_after.label }}</th>
+        <td>{{ form.weeks_after }}</td>
+    </tr>
+    <tr><td colspan="2">{{ form.days_after.errors }}</td></tr>
+    <tr>
+        <th>{{ form.days_after.label }}</th>
+        <td>{{ form.days_after }}</td>
+    </tr>
+    <tr><td colspan="2">{{ form.allow_late.errors }}</td></tr>
+    <tr>
+        <th>{{ form.allow_late.label }}</th>
+        <td>{{ form.allow_late }}</td>
+    </tr>
+    <tr><td colspan="2">{{ form.disable_submissions.errors }}</td></tr>
+    <tr>
+        <th>{{ form.disable_submissions.label }}</th>
+        <td>{{ form.disable_submissions }}</td>
+    </tr>
+    <tr><td colspan="2">{% csrf_token %}</td></tr>
+    <tr>
+        <td></td>
+        <td><br /><input type="submit" value="Add Assignment" />
+            </td>
+    </tr>
+</table>
+<div class="required">* Denotes Required Field</div>
+</form>
+
+{% endblock %}

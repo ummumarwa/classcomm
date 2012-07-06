@@ -1,0 +1,67 @@
+{% extends "instructor_portal/course_base.html" %}
+{% load instructor_portal_extras %}
+
+{% block extrahead %}
+<script type="text/javascript" src="{{ STATIC_URL }}sorttable.js"></script>
+{% endblock %}
+
+{% block content %}
+
+{# Page Heading #}
+<h2>Course Roster</h2>
+
+{# Detail Information #}
+<p>Now viewing course roster, with links to E-mails, grade reports and sortable table headings.</p>
+
+{# Print Error Information #}
+<div class="error">
+    <h3>{{ error_string }}</h3>
+</div>
+
+{# List Enrollments #}
+<h3>{{ course.name }}</h3>
+{% if enrollments.object_list %}
+
+{# Configure Table Enrollment Header #}
+<table summary="Entire Course Enrollments" class="assignments sortable" cellspacing="0">
+<thead>
+    <tr>
+        <th>UserName</th>
+        <th>Start Date</th>
+        <th>Grading</th>
+    </tr>
+</thead>
+
+{# Cycle through the course enrollments #}
+{% for enrollment in enrollments.object_list %}
+<tr class="enrollmentNormal">
+    <td><b>{{ enrollment.student|printUsername|safe }}</b></td>
+    <td><b>{{ enrollment.start_date }}</b></td>
+    <td><img class="icon" src="{{ STATIC_URL }}icon_info_smallest.png" alt="Student Info" />
+        <a href="grade_report/{{ enrollment.id }}/">Grade Report</a></td>
+</tr>
+{% endfor %}
+</table>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if enrollments.has_previous %}
+            <a href="?page={{ enrollments.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ enrollments.number }} of {{ enrollments.paginator.num_pages }}.
+        </span>
+
+        {% if enrollments.has_next %}
+            <a href="?page={{ enrollments.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+
+{% else %}
+<i><h4>No Assignments Listed</h4></i>
+{% endif %}
+
+{% endblock %}
+

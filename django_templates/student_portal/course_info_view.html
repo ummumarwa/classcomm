@@ -1,0 +1,27 @@
+{% extends "student_portal/course_base.html" %}
+
+{% block content %}
+
+{# List Page Heading #}
+<h2>{{ course.name }} - Information</h2>
+
+{# List department infos #}
+{% if info %}
+<h3>{{ info }}</h3>
+<table cellspacing='0' class="resourceinfo">
+<tr>
+   <td>
+      <em>{{ info.description }}</em>
+      <br />
+      <br />
+      {{ info.details|safe }}
+   </td>
+</tr>
+</table>
+{# In case there are no department infos #}
+{% else %}
+<h3>Information Unavailable</h3>
+{% endif %}
+
+{% endblock %}
+

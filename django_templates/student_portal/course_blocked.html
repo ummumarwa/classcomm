@@ -1,0 +1,26 @@
+{% extends "student_portal/loggedin_base.html" %}
+
+{% block content %}
+
+{# Case: No User Enrollment for this Course: (ENROLLMENT_BAD_USER) #}
+{% ifequal access_flag -1 %}
+<h2>Requested Enrollment does not correspond to you, the Authenticated User!</h2>
+{% endifequal %}
+
+{# Case: The User Enrollment has access_mode disabled: (ENROLLMENT_DISABLED) #}
+{% ifequal access_flag 0 %}
+<h2>Your Enrollment for this Course is currently set to disabled.</h2>
+{% endifequal %}
+
+{# Case: The User Enrollment has not yet begun: (ENROLLMENT_EARLY) #}
+{% ifequal access_flag 3 %}
+<h2>Your Enrollment period has not yet begun.  It is scheduled to begin on: {{ enrollment.start_date }}.</h2>
+{% endifequal %}
+
+{# Case: User enrollment has expired: (ENROLLMENT_ENDED) #}
+{% ifequal access_flag 4 %}
+<h2>Your Enrollment period has expired.  Check your program for details on extensions.</h2>
+{% endifequal %}
+
+{% endblock %}
+

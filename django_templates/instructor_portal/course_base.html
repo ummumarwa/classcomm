@@ -1,0 +1,11 @@
+{% extends "student_portal/loggedin_base.html" %}
+
+{% block menuitems %}
+<li><a href="/instructor/welcome/">Welcome</a></li>
+<li><a href="/instructor/checkscript/">Checkscript</a></li>
+<li><a href="/instructor/courseindex/{{ course.id }}/">Course Home</a></li>
+<li><a href="/instructor/courseindex/{{ course.id }}/assignments/">Course Assignments</a></li>
+<li><a href="/instructor/courseindex/{{ course.id }}/information/">Course Information</a></li>
+<li><a href="/instructor/courseindex/{{ course.id }}/resources/">Course Resources</a></li>
+<li><a href="/instructor/courseindex/{{ course.id }}/roster_tools/">Course Roster</a></li>
+{% endblock %}

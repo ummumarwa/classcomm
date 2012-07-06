@@ -1,0 +1,150 @@
+{% extends "instructor_portal/course_base.html" %}
+
+{% load instructor_portal_extras %}
+{% load student_portal_extras %} {# because of printUser #}
+
+{% block extrahead %}
+<script type="text/javascript">
+function deleteAnnouncement(announcementId) {
+    if (confirm("Are you sure you want to delete this Announcement?")) {
+        announcement = "deleteAnnouncement-" + announcementId;
+        document.getElementById(announcement).submit();
+    }
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<h2>{{ course.name }}</h2>
+
+{# Print Messages Stack #}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+{# Course Overview #}
+<h3>Course Overview</h3>
+<table cellspacing='0' class="CourseList">
+<tr>
+    <td><b>Department:</b></td>
+    <td>
+        {% if course.department %}
+            {{ course.department.name|safe }}
+        {% else %}
+            None Listed
+        {% endif %}
+    </td>
+</tr>
+<tr>
+    <td><b>Course Director:</b></td>
+    <td>
+        {% if course.director %}
+            {{ course.director|printUser|safe }}
+        {% else %}
+            None Listed
+        {% endif %}
+    </td>
+</tr>
+<tr>
+    <td><b>Instructors:</b></td>
+    <td>
+    {% if instructors %}
+        {% for instructor in instructors %}
+            {{ instructor.instructor|printUser|safe }}
+            <br />
+        {% endfor %}
+    {% else %}
+        None Listed
+    {% endif %}
+   </td>
+</tr>
+<tr>
+    <td><b>Mentors:</b></td>
+    <td>
+    {% if mentors %}
+        {% for mentor in mentors %}
+            {{ mentor.mentor|printUser|safe }}
+            <br />
+        {% endfor %}
+    {% else %}
+        None Listed
+    {% endif %}
+    </td>
+</tr>
+<tr>
+    <td><b>Student Assigns:</b></td>
+    <td>
+    {% if student_assigns %}
+        {% for enrollment in student_assigns %}
+            {{ enrollment.student|printUser|safe }}
+            <br />
+        {% endfor %}
+    {% else %}
+        None Listed
+    {% endif %}
+    </td>
+</tr>
+</table>
+
+{% if access_type|editInstructor %} {# Link: Add new Instructor in admin. #}
+<br /><div id="instructor_add">
+    <b><img class="icon" src="{{ STATIC_URL }}icon_add_smallest.png" alt="Add Instructor" />
+    <a href="/admin/student_portal/instructor/add/?course={{ course.id }}">Add new Instructor using admin?</a></b>
+</div>
+{% endif %}
+
+{% if access_type|editMentor %} {# Link: Add new Mentor in admin. #}
+<br /><div id="mentor_add">
+    <b><img class="icon" src="{{ STATIC_URL }}icon_add_smallest.png" alt="Add Mentor" />
+    <a href="/admin/student_portal/mentor/add/?course={{ course.id }}">Add new Mentor using admin?</a></b>
+</div>
+{% endif %}
+
+<br />
+<h3>Course Announcements</h3>
+{% if announcements %}
+    {# Print Link to Add Announcement #}
+    {% if access_type|editAnnouncement %}
+        <div id="announcement_add">
+            <b><img class="icon" src="{{ STATIC_URL }}icon_add_smallest.png" alt="Add Announcement" />
+            <a href="announcement/add/">Add Announcement to this Course?</a></b>
+        </div>
+    {% endif %}
+    {# List the Course Announcements #}
+    {% for announcement in announcements %}
+        <div class="announcement">
+        <h3>{{ announcement.headline }}</h3>
+        <b>Tags: </b> {# Add Announcement Tag(s) #}
+        {% if announcement.department %}
+            <img src="{{ STATIC_URL }}tag_department.png" alt="Department Announcement" />
+        {%  endif %} {% if announcement.course %}
+            <img src="{{ STATIC_URL }}tag_course.png" alt="Course Announcement" />
+        {% endif %}
+        {% if access_type|editAnnouncement %} {# Option for Editing this Announcement in Admin #}
+            <div> <img src="{{ STATIC_URL }}icon_info_smallest.png" alt="Edit Announcement" />
+            <b><a href="/admin/student_portal/announcement/{{ announcement.id }}/">
+                Edit this Announcement in Admin.</a></b><br /> </div>
+        {% endif %}
+        <h4>Posted by: <a href="mailto:{{ announcement.author.email }}">{{ announcement.author }}</a>
+             - {{ announcement.pub_date|date:"M jS Y" }}</h4>
+        <p>{{ announcement.content }}</p>
+        {% if access_type|editAnnouncement %} {# Add possibly for deleting this Announcement #}
+            <form id="deleteAnnouncement-{{ announcement.id }}" method="post"
+                action="announcement/delete/{{ announcement.id }}/">
+            {% csrf_token %}
+            <div> <img src="{{ STATIC_URL }}icon_delete_smallest.png" alt="Delete Announcement" />
+            <b><a href="javascript:deleteAnnouncement({{ announcement.id }})">
+                Delete this Announcement?</a></b><br /> </div>
+            </form>
+        {% endif %}
+        </div>
+    {% endfor %}
+{% else %}
+    <h4><i>Presently No Announcements</i></h4>
+{% endif %}
+
+{% endblock %}

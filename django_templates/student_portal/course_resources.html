@@ -1,0 +1,65 @@
+{% extends "student_portal/course_base.html" %}
+
+{% block content %}
+
+{# Page Heading #}
+<h2>{{ course.name }} - Resources</h2>
+
+{# Detail Information #}
+<div>
+   A collection of external resources, organized by
+   <a href="#department">Department [{{ course.department }}] Specific</a> and
+   <a href="#course">Course [{{ course }}] Specific</a>.
+</div>
+
+
+{# List Department Resources #}
+<a name="department"></a>
+<h3>Department Resources</h3>
+{% if department_resources %}
+{# Cycle through the department resources #}
+{% for resource in department_resources %}
+{# Create optional hyperlink #}
+{% if resource.url %}
+<h4><a class="resourceinfo" href="{{ resource.url }}">{{ resource }}</a></h4>
+{% else %}
+<h4>{{ resource }}</h4>
+{% endif %}
+{# List resource details #}
+<table cellspacing='0' class="resourceinfo">
+<tr>
+   <td>{{ resource.details|safe }}</td>
+</tr>
+</table><br />
+{% endfor %}
+{# In case there are no department resources #}
+{% else %}
+<h4><i>No Resources Listed</i></h4>
+{% endif %}
+
+{# List Course Resources #}
+<a name="course"></a>
+<h3>Course Resources</h3>
+{% if course_resources %}
+{# Cycle through the course resources #}
+{% for resource in course_resources %}
+{# Create optional hyperlink #}
+{% if resource.url %}
+<h4><a class="resourceinfo" href="{{ resource.url }}">{{ resource }}</a></h4>
+{% else %}
+<h4>{{ resource }}</h4>
+{% endif %}
+{# List resource details #}
+<table cellspacing='0' class="resourceinfo">
+<tr>
+   <td>{{ resource.details|safe }}</td>
+</tr>
+</table><br />
+{% endfor %}
+{# In case there are no course resources #}
+{% else %}
+<h4><i>No Resources Listed</i></h4>
+{% endif %}
+
+{% endblock %}
+

@@ -1,0 +1,289 @@
+/* Classcomm Default Style Sheet
+
+Classcomm Version: 1.0.3
+(March 1, 2011)
+
+*/
+
+
+/**** Page Layout Styling ****/
+body {
+    margin: 0 auto;
+    padding: 0;
+    font: 76% Verdana,Tahoma,Arial,sans-serif;
+    background: #f4f4f4 url('bg.gif') top center repeat-y; }
+#wrap {
+    background: #ffffff;
+    color: #303030;
+    margin: 0 auto;
+    width: 760px; }
+
+/**** Header Styling ****/
+#header {
+clear: both;
+    margin: 20px 0 0 0;
+    padding: 0;
+    height: 45px; }
+#header h1 {
+    font-size: 2.5em;
+    width: 250px;
+    margin: 0 0 10px 0;
+    float: left; }
+#header p {
+    width: 500px;
+    float: right;
+    text-align: center;
+    color: #a0a0a0;
+    margin: 0 0 10px 0;
+    font-size: 1.2em;
+    line-height: 1.2em; }
+#header .serverTime {
+    font-size: .9em; }
+#frontphoto {
+    margin: 0 0 10px 0;
+    border: 0; }
+
+/**** Main Content Styling ****/
+#content {
+    margin: 0 10px 10px 180px;
+    border-left: 1px solid #f0f0f0;
+    border-right: 1px solid #f0f0f0;
+    padding: 0 10px 0 10px;
+    line-height: 1.6em;
+    text-align: left; }
+#content h2 {
+    font-size: 1.75em;
+    margin: 0 0 0.5em 0; }
+h4 {
+    font-size: 1.3em;
+    margin: 0.3em 0.3em 0.3em 0.3em; }
+h3 {
+    font-size: 1.5em;
+    color: #505050;
+    margin: 1.5em 1.0em 0.5em 0.5em; }
+a {
+    text-decoration: none;
+    color: #286ea0; }
+a:hover {
+    text-decoration: underline; }
+
+/**** Footer Styling ****/
+#footer {
+    clear: both;
+    margin: 0 auto;
+    padding: 10px 0 20px 0;
+    border-top: 4px solid #f0f0f0;
+    width: 760px;
+    text-align: center;
+    color: #808080;
+    font-size: 0.9em; }
+#footer a {
+    color: #808080;
+    text-decoration: none; }
+#footer a:hover {
+    text-decoration: underline; }
+
+/**** Side Menu Styling (current default layout) ****/
+#avmenu {
+    clear: left;
+    float: left;
+    width: 150px;
+    margin: 0 0 10px 0;
+    padding: 0;
+    font-size: 0.9em; }
+#avmenu ul {
+    list-style: none;
+    width: 170px;
+    margin: 0 0 10px 0;
+    padding: 0;
+    font-size: 1.1em; }
+#avmenu li {
+    margin-bottom: 4px; }
+#avmenu li a {
+    font-weight: bold;
+    height: 20px;
+    text-decoration: none;
+    color: #505050;
+    display: block;
+    padding: 6px 0 0 10px;
+    background: #f4f4f4;
+    border-left: 4px solid #cccccc; }
+#avmenu li a:hover {
+    background: #eaeaea;
+    color: #286ea0;
+    border-left: 4px solid #286ea0; }
+
+/**** Errors and Error Form Styling ****/
+.errornote {
+    font-size: 124x !important;
+    display: block;
+    padding: 4px 5px 4px 25px;
+    margin: 0 0 3px 0;
+    border: 1px solid red;
+    color: red;
+    background: #ffc url(../img/admin/icon_error.gif) 5px .3em no-repeat; }
+ul.errorlist {
+    margin: 0 !important;
+    padding: 0 !important; }
+.errorlist li {
+    font-size: 14px !important;
+    display: block;
+    padding: 4px 5px 4px 25px;
+    margin: 0 0 3px 0;
+    border: 1px solid red;
+    color: white;
+    background: red url(../img/admin/icon_alert.gif) 5px .3em no-repeat; }
+.errorlist li a {
+ 	color: white;
+    text-decoration: underline; }
+td ul.errorlist {
+    margin: 0 !important;
+    padding: 0 !important; }
+td ul.errorlist li {
+    margin: 0 !important; }
+.errors {
+    background: #ffc; }
+.errors input, .errors select {
+    border: 1px solid red; }
+.required {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #FF0000; }
+.error h3 {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #FF0000;
+    margin: 1.5em 0.5em 0.25em 0.5em; }
+
+
+/**** Positional, Alignment, Text Weight and Form Input/Submit Boxes ****/
+.left {
+    margin: 10px 10px 5px 0;
+    float: left;
+}
+.right {
+    margin: 10px 0 5px 10px;
+    float: right;
+}
+.textright {
+    text-align: right;
+}
+.center {
+    text-align: center;
+}
+.small {
+    font-size: 0.8em;
+}
+.bold {
+    font-weight: bold;
+}
+.hide {
+    display: none;
+}
+label {
+    width: 6em;
+    float: left;
+    text-align: right;
+    margin-right: 0.5em;
+    display: block
+}
+input {
+    margin: 1px 1px 1px 1px;
+    background: #f0f0f0;
+    border: 2px solid #286ea0
+}
+.submit input {
+    margin: 1px 1px 1px 1px;
+    background: #f0f0f0;
+    border: 2px outset #286ea0;
+    margin-left: 4.5em;
+}
+fieldset {
+    border: 1px solid #286ea0;
+    width: 20em
+}
+
+/**** Announcement Styling ****/
+.announcement h3 {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #505050;
+    margin: 1.5em 0.5em 0.25em 0.5em; }
+.announcement h4 {
+    font-size: 1em;
+    font-style: italic;
+    font-weight: normal;
+    margin: 0.25em 0.5em 0.25em 1.0em; }
+.announcement p {
+    font-size: 1.15em;
+    margin: 0 1.0em 0 1.0em; }
+
+/**** Course List Table Stylings ****/
+table.CourseList {
+    border-spacing: 0px;
+    border-collapse: collapse;
+    border-top: 4px solid #EA9A1C;
+    border-bottom: 1px solid #EA9A1C; }
+table.CourseList th {
+    text-align: left;
+    font-weight: bold;
+    padding: 0.2em 0.5em;
+    border-top: 1px dotted #EA9A1C; }
+table.CourseList td {
+    text-align: center;
+    border-top: 1px dotted #EA9A1C;
+    padding: 0.2em 0.5em; }
+table.CourseList thead th {
+    text-align: center;
+    border-bottom: 1px solid #EA9A1C; }
+table.CourseList th.Corner {
+    text-align: left; }
+
+/**** Assignments Table Widget ****/
+table.assignments {
+    text-align: center;
+    font-weight: normal;
+    color: #404040;
+    width: 520px;
+    margin: 0.5em 1.0em 0.5em 0.5em;
+    border-top: 4px solid #EA9A1C;
+    border-bottom: 1px solid #EA9A1C;   
+    border-collapse: collapse;
+    border-spacing: 0px; }
+table.assignments thead {
+    background-color: #FFFFFF;
+    font-weight: bold;   
+    font-size: 1.2em; }
+table.assignments th {
+    width: 33%; }
+table.assignments td {
+    text-align: center;
+    font-weight: normal;
+    font-size: 0.95em;
+    color: #404040;
+    border-top: 1px dotted #EA9A1C;
+    padding: 5px; }
+table.assignments td.assignmentDesc {
+    text-align: left; }
+tr.assignmentNormal {
+    background-color: #FCF8DC; }
+tr.assignmentSubmitted {
+    background-color: #F5F5DC; }
+tr.assignmentGraded {
+    background-color: #EEF3E2; }
+tr.assignmentBlank {
+    background-color: #FFFFFF; }
+
+/**** Table Information / Resource Styling ****/
+a.resourceinfo {
+    text-decoration: underline; }
+table.resourceinfo {
+    border-spacing: 0px;
+    width: 400px;    
+    border-collapse: collapse; }
+table.resourceinfo td {
+    text-align: left;
+    border-bottom: 2px solid #FFFFFF;
+    padding: 0.1em 0.5em;
+    background: #DBE2F1; }
+

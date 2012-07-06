@@ -1,0 +1,79 @@
+{% extends "instructor_portal/course_base.html" %}
+{% load instructor_portal_extras %}
+
+{% block content %}
+
+{# List Page Heading #}
+<h2>{{ course.name }} - Information</h2>
+
+{# Detail Information #}
+<div>
+   Useful information, organized by
+   <a href="#department">Department [{{ course.department }}] Specific</a> and
+   <a href="#course">Course [{{ course }}] Specific</a>.
+</div>
+
+{# List department infos #}
+<a name="department"></a>
+<h3>Department Information</h3>
+{# Add possibly for Adding Dept. Information in Admin #}
+{% if access_type|editInformation %}
+<div> <img src="{{ STATIC_URL }}icon_add_smallest.png" alt="Add Information" />
+<b><a href="/admin/student_portal/information/add/?department={{ course.department.id }}">
+    Add New Department Information in Admin?</a></b>
+</div><br />
+{% endif %}
+{% if department_infos %}
+{# Cycle through the department infos #}
+{% for department_info in department_infos %}
+<h4><a class="resourceinfo" href="infoview/{{ department_info.id }}/">{{ department_info.name }}</a></h4>
+{# Add possibly for Editing this Resource in Admin #}
+{% if access_type|editInformation %}
+    <div> <img src="{{ STATIC_URL }}icon_info_smallest.png" alt="Edit Information" />
+    <b><a href="/admin/student_portal/information/{{ department_info.id }}/">
+        Edit this Information in Admin.</a></b><br /> </div>
+{% endif %}
+<table cellspacing='0' class="resourceinfo">
+<tr>
+   <td>{{ department_info.description }}</td>
+</tr>
+</table><br />
+{% endfor %}
+{# In case there are no department infos #}
+{% else %}
+<h4><i>No Information Listed</i></h4>
+{% endif %}
+
+{# List course infos #}
+<a name="course"></a>
+<h3>Course Information</h3>
+{# Add possibly for Adding Course Information in Admin #}
+{% if access_type|editInformation %}
+<div> <img src="{{ STATIC_URL }}icon_add_smallest.png" alt="Add Information" />
+<b><a href="/admin/student_portal/information/add/?course={{ course.id }}">
+    Add New Course Information in Admin?</a></b>
+</div><br />
+{% endif %}
+{% if course_infos %}
+{# Cycle through the course infos #}
+{% for course_info in course_infos %}
+<h4><a class="resourceinfo" href="infoview/{{ course_info.id }}">{{ course_info.name }}</a></h4>
+{# Add possibly for Editing this Resource in Admin #}
+{% if access_type|editInformation %}
+    <div> <img src="{{ STATIC_URL }}icon_info_smallest.png" alt="Edit Information" />
+    <b><a href="/admin/student_portal/information/{{ course_info.id }}/">
+        Edit this Information in Admin.</a></b><br /> </div>
+{% endif %}
+<table cellspacing='0' class="resourceinfo">
+<tr>
+   <td>{{ course_info.description }}</td>
+</tr>
+</table><br />
+{% endfor %}
+{# In case there are no course infos #}
+{% else %}
+<h4><i>No Information Listed</i></h4>
+{% endif %}
+
+{% endblock %}
+

@@ -1,0 +1,17 @@
+{% extends "admin/base.html" %}
+{% load i18n %}
+
+{% block title %}{{ title }}  {% trans 'Classcomm Administration' %}{% endblock %}
+
+{% block branding %}
+<style type="text/css">
+  #header
+  {
+    /* your style here */
+  }
+</style>
+<h1 id="site-name">{% trans 'Classcomm Administration' %}</h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
+

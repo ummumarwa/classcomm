@@ -1,0 +1,51 @@
+{% extends "student_portal/loggedin_base.html" %}
+
+{# Use our custom template library #}
+{% load student_portal_extras %}
+
+{% block content %}
+
+{# Page Heading #}
+<h2>Open Enrollment Courses</h2>
+
+{# Detail Information #}
+<div>
+   Courses on classcomm which are available for open enrollment--simply enroll in any of the Courses available on this page!
+</div>
+
+{# Print Messages Stack #}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+{# List Open Enrollment Courses #}
+{% if courses %}
+{% for course in courses %}
+{# Create a course entry with enrollment option #}
+<h3>{{ course.name}}</h3>
+{# List course details with hidden form for enrollment #}
+<form action="/student/open_enrollments/" method="post">{% csrf_token %}
+<div style='display:none'><input type="hidden" name="course" value="{{ course.id }}"></input></div>
+<table cellspacing='0' class="resourceinfo">
+<tr>
+   <td><i>Description:</i>  {{ course.description }}</td>
+</tr>
+<tr>
+   <td><input type="submit" value="Enroll in this course!" /></td>
+</tr>
+</table>
+
+</form>
+{% endfor %}
+{# In case there are no courses #}
+{% else %}
+<br />
+<br />
+<h4><i>No Courses Currently Available</i></h4>
+{% endif %}
+
+{% endblock %}
